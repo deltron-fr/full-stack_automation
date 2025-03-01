@@ -29,19 +29,3 @@ variable "ssh_key_path" {
 variable "inventory_file_path" {
   type = string
 }
-
-variable "blob_resource_group" {
-  type = string
-}
-
-variable "blob_storage_account" {
-  type = string 
-}
-
-variable "blob_container" {
-  type = string
-}
-
-variable "blob_key" {
-  type = string
-}
