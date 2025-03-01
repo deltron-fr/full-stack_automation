@@ -28,12 +28,34 @@ resource "azurerm_public_ip" "public_ip" {
   allocation_method   = "Dynamic"
 }
 
+# Create nic
+resource "azurerm_network_interface" "nic" {
+  name                = "${var.resource_name}-nic"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = var.location
+
+  ip_configuration {
+    name                          = "${var.resource_name}-nic-configuration"
+    private_ip_address_allocation = "Dynamic"
+    subnet_id                     = azurerm_subnet.subnet.id
+    public_ip_address_id          = azurerm_public_ip.public_ip.id
+  }
+}
+
 # Create Network Security Group
 resource "azurerm_network_security_group" "nsg" {
   name                = "${var.resource_name}-nsg"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
+
 }
+
+# Connect the security group to the network interface
+resource "azurerm_network_interface_security_group_association" "nsg_nic_connection" {
+  network_interface_id      = azurerm_network_interface.nic.id
+  network_security_group_id = azurerm_network_security_group.nsg.id
+}
+
 
 # Create Network Sceurity Rules
 resource "azurerm_network_security_rule" "Allow_SSH" {
@@ -78,25 +100,6 @@ resource "azurerm_network_security_rule" "Allow_HTTPS" {
   protocol                    = "Tcp"
 }
 
-# Create nic
-resource "azurerm_network_interface" "nic" {
-  name                = "${var.resource_name}-nic"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = var.location
-
-  ip_configuration {
-    name                          = "${var.resource_name}-nic-configuration"
-    private_ip_address_allocation = "Dynamic"
-    subnet_id                     = azurerm_subnet.subnet.id
-    public_ip_address_id          = azurerm_public_ip.public_ip.id
-  }
-}
-
-# Connect the security group to the network interface
-resource "azurerm_network_interface_security_group_association" "nsg_nic_connection" {
-  network_interface_id      = azurerm_network_interface.nic.id
-  network_security_group_id = azurerm_network_security_group.nsg.id
-}
 
 # Create a Virtual Machine
 resource "azurerm_linux_virtual_machine" "main" {

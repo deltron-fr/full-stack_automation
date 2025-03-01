@@ -29,3 +29,7 @@ variable "ssh_key_path" {
 variable "inventory_file_path" {
   type = string
 }
+
+variable "ssh_pri_key" {
+  type = string
+}
