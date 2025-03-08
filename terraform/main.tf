@@ -100,6 +100,20 @@ resource "azurerm_network_security_rule" "Allow_HTTPS" {
   protocol                    = "Tcp"
 }
 
+resource "azurerm_network_security_rule" "Allow_NPM" {
+  resource_group_name         = var.resource_name
+  network_security_group_name = azurerm_network_security_group.nsg.name
+  name                        = "NPM"
+  priority                    = 1004
+  destination_port_range      = "81"
+  source_port_range           = "*"
+  direction                   = "Inbound"
+  access                      = "Allow"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  protocol                    = "Tcp"
+}
+
 
 # Create a Virtual Machine
 resource "azurerm_linux_virtual_machine" "main" {

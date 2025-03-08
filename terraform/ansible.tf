@@ -23,6 +23,10 @@ resource "null_resource" "ansible_provisioner" {
     command = "cd ../ansible && ansible-playbook playbook.yaml"
   }
 
+   triggers = {
+    script_version = "1.0.1"  
+  }
+
   depends_on = [ azurerm_linux_virtual_machine.main,
                  azurerm_public_ip.public_ip,
                  azurerm_network_security_group.nsg,
