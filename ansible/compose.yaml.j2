@@ -59,15 +59,16 @@ services:
       - backend_network
   
   nginx:
-    image: jc21/nginx-proxy-manager:latest
-    container_name: nginx-proxy-manager
+    image: nginx:latest
+    container_name: nginx
     restart: unless-stopped
     ports:
       - "80:80"
-      - "81:81"
       - "443:443"
     volumes:
-      - data:/data
+      - /etc/letsencrypt/live/deltronfr.mooo.com/fullchain.pem:/etc/nginx/ssl/fullchain.pem
+      - /etc/letsencrypt/live/deltronfr.mooo.com/privkey.pem:/etc/nginx/ssl/privkey.pem
+      - ./nginx.conf:/etc/nginx/nginx.conf
       - letsencrypt:/etc/letsencrypt
     depends_on:
       - frontend
@@ -88,5 +89,9 @@ volumes:
 
 networks:
   frontend_network:
+    driver: bridge
   backend_network:
+    driver: bridge
   monitoring_network:
+    driver: bridge
+

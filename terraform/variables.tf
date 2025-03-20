@@ -33,3 +33,7 @@ variable "inventory_file_path" {
 variable "ssh_pri_key" {
   type = string
 }
+
+variable "dns_password" {
+  type = string
+}

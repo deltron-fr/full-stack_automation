@@ -32,8 +32,8 @@ services:
     volumes:
       - grafana-data:/var/lib/grafana
       - ./monitoring/grafana.ini:/etc/grafana/grafana.ini
-      - ./monitoring/provisioning/dashboards:/etc/grafana/provisioning/dashboards
-      - ./monitoring/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./monitoring/provisioning/dashboards/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
+      - ./monitoring/provisioning/datasources/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
       - ./monitoring/dashboards:/var/lib/grafana/dashboards
     depends_on:
       - loki
@@ -101,4 +101,5 @@ volumes:
   prom_data:
   grafana-data:
   loki-data:
+
 
