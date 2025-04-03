@@ -85,6 +85,12 @@
           - monitoring_network
         state: present
     
+    - name: Copy Nginx Configuration Files
+      template:
+        src: nginx.conf.j2
+        dest: /opt/monitoring_app/nginx.conf
+        mode: 0644
+      
     - name: Copy docker compose application file
       template:
         src: compose.yaml.j2

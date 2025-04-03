@@ -3,12 +3,12 @@
     "title": "Loki Logs",
     "panels": [
       {
-        "datasource": "Loki",
+        "datasource": "loki",
         "type": "logs",
         "title": "Container Logs",
         "targets": [
           {
-            "datasource": "Loki",
+            "datasource": "loki",
             "expr": "{container=~\".*\"}"
           }
         ],
