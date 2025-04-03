@@ -102,7 +102,6 @@
         src: compose.monitoring.yaml.j2
         dest: /opt/monitoring_app/compose.monitoring.yaml
         mode: 0644
-
     
     - name: Copy Monitoring directory to server
       synchronize:
