@@ -1,37 +1,19 @@
-resource "local_file" "inventory" {
-  filename = var.inventory_file_path
-  content  = <<EOF
-    [web_servers]
-    ${azurerm_linux_virtual_machine.main.public_ip_address}
-    EOF
-}
+resource "null_resource" "inventory" {
 
-resource "null_resource" "dns_provisioner"{
-  provisioner "remote-exec" {
-    inline = [ "sudo curl -u 'deltronfr:${var.dns_password}' http://@freedns.afraid.org/nic/update?hostname=deltronfr.mooo.com&myip=${azurerm_linux_virtual_machine.main.public_ip_address}",]
-  
-    connection {
-      host = "${azurerm_linux_virtual_machine.main.public_ip_address}"
-      type = "ssh"
-      user = var.admin_username
-      private_key = file(var.ssh_pri_key)
-    }
+  provisioner "local-exec" {
+    command =  "echo [web_servers] > ../ansible/inventory.ini && echo ${azurerm_linux_virtual_machine.main.public_ip_address} >> ../ansible/inventory.ini"
   }
-
   triggers = {
-    script_version = "1.0.1" 
+    script_version = "1.0.2"  
   }
+    }
+    
 
-  depends_on = [ azurerm_linux_virtual_machine.main,
-                 azurerm_public_ip.public_ip,
-                 azurerm_network_security_group.nsg,
-                 local_file.inventory
-               ]
-}
 
 resource "null_resource" "ansible_provisioner" {
   provisioner "remote-exec" {
-    inline = [ "sudo apt update -y", "echo Done!" ]
+    inline = [ "sudo apt update -y", "echo Done!",
+               "curl http://'deltronfr:${var.dns_password}'@freedns.afraid.org/nic/update?hostname=deltronfr.mooo.com&myip=${azurerm_linux_virtual_machine.main.public_ip_address} && echo Success && sleep 7" ]
 
     connection {
       host = "${azurerm_linux_virtual_machine.main.public_ip_address}"
@@ -46,13 +28,11 @@ resource "null_resource" "ansible_provisioner" {
   }
 
    triggers = {
-    script_version = "1.0.1"  
+    script_version = "1.0.2"  
   }
 
   depends_on = [ azurerm_linux_virtual_machine.main,
                  azurerm_public_ip.public_ip,
                  azurerm_network_security_group.nsg,
-                 local_file.inventory,
-                 null_resource.dns_provisioner
                ]
 }
