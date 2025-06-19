@@ -111,7 +111,7 @@ After the VM is provisioned, Ansible is used to:
 
 > 🔐 You must manually create a `group_vars` directory to store environment variables for each host. This folder is excluded from version control for security reasons.
 
-> 🛠️ You must also update the `nginx.conf.j2` file with your actual domain and the SSL certificate paths issued by Certbot.
+> 🛠️ You must also update the [`nginx.conf.j2`](ansible/nginx.conf.j2) file and the grafana environment variable at [`compose.monitoring.yaml.j2`](ansible/compose.monitoring.yaml.j2) with your actual domain and the SSL certificate paths issued by Certbot.
 
 See [`playbook.yaml`](ansible/playbook.yaml) for the full automation logic.
 
