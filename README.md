@@ -18,7 +18,7 @@ This project is a fully automated, production-ready stack for deploying, monitor
 
 ## Architecture Overview
 
-!['architecture'](./assets/automation.img)
+!['architecture'](./assets/automation_img.png)
 
 All infrastructure and services are provisioned and configured with a single command:
 ```
