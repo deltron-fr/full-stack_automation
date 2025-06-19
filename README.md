@@ -120,8 +120,8 @@ See [`playbook.yaml`](ansible/playbook.yaml) for the full automation logic.
 ## Application & Monitoring Stack (Docker Compose)
 The application and monitoring services are defined in two Compose files:
 
-[`compose.yaml.j2`](ansible/compose.yaml.j2): Main app stack (db, adminer, backend, frontend, nginx, certbot)
-[`compose.monitoring.yaml.j2`](ansible/compose.monitoring.yaml.j2): Monitoring stack (prometheus, grafana, loki, promtail, cadvisor)
+- [`compose.yaml.j2`](ansible/compose.yaml.j2): Main app stack (db, adminer, backend, frontend, nginx, certbot)
+- [`compose.monitoring.yaml.j2`](ansible/compose.monitoring.yaml.j2): Monitoring stack (prometheus, grafana, loki, promtail, cadvisor)
 These are rendered and deployed to `/opt/monitoring_app/` on the VM.
 
 ### Networks & Volumes
